@@ -1,0 +1,46 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateRewardsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create($this->commentsTable(), function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('rewardable_id')->nullable();
+            $table->string('rewardable_type')->nullable();
+            $table->index(['rewardable_id', 'rewardable_type']);
+            $table->string('rewarded_id')->nullable();
+            $table->string('rewarded_type')->nullable();
+            $table->index(['rewarded_id', 'rewarded_type']);
+            $table->decimal('amount', 7,2);
+            $table->longText('comment')->nullable();
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::drop($this->commentsTable());
+    }
+
+    private function commentsTable(): string
+    {
+        $model = config('reward.model');
+
+        return (new $model)->getTable();
+    }
+}

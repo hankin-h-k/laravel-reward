@@ -35,7 +35,7 @@ class RewardServiceProvider extends ServiceProvider
             $timestamp = date('Y_m_d_His', time());
 
             $this->publishes([
-                __DIR__. '/../database/migrations/create_rewards_table.pgp.stub' =>
+                __DIR__. '/../database/migrations/create_rewards_table.php.stub' =>
                 database_path("migrations/{$timestamp}__create__rewards_table.php")
             ], 'migrations');
         }
